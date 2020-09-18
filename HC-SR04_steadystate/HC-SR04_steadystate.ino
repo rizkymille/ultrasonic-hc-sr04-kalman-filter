@@ -1,9 +1,13 @@
 /* credits to VDEngineering video for the kalman filter algorithm
  *  youtube video: https://www.youtube.com/watch?v=ruB917YmtgE
+ *
+ *  This program was made in Arduino Uno, please customize those
+ *  pins according to your board/needs
  */
 
-const int echo = 2;
-const int trig = 3;
+
+const int echo = 2; //using Pin 2
+const int trig = 3; //using Pin 3
 const int maxdist = 335;
 const float mindist = 2.5;
 double kalman(double U);
