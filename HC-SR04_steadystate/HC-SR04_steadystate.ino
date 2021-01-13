@@ -5,7 +5,6 @@
  *  pins according to your board/needs
  */
 
-
 const int echo = 2; //using Pin 2
 const int trig = 3; //using Pin 3
 const int maxdist = 335;
