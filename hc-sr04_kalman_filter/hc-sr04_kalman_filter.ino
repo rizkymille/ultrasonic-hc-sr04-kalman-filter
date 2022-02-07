@@ -2,11 +2,16 @@
  *  youtube video: https://www.youtube.com/watch?v=ruB917YmtgE
  */
 
+// ULTRASONIC //
+// Pins
 const int echo = 2;
 const int trig = 3;
+// Constrains
 const int maxdist = 335;
 const float mindist = 2.5;
-double kalman(double U);
+
+double distance, duration;
+double kaldist;
 
 double kalman(double U){
   static const double R = 40;
@@ -21,29 +26,28 @@ double kalman(double U){
   return U_hat;
 }
 
-double distance, duration;
-
 void setup(){
   pinMode(trig, OUTPUT);
   pinMode(echo, INPUT);
   Serial.begin(9600);
 }
 
-void loop(){
-  digitalWrite(trig, LOW);
-  delayMicroseconds(2);
+void usonic_transmit() {
   digitalWrite(trig, HIGH);
   delayMicroseconds(10);
   digitalWrite(trig, LOW);
+  delayMicroseconds(2);
+}
+
+void loop(){
+  usonic_transmit();
+  
   duration = pulseIn(echo, HIGH);
   distance = (duration*.034)/2;
+  kaldist = kalman(distance);
 
-  Serial.print("Distance (in cm): ");
-
-  double fildist;
-  fildist = kalman(distance);
-  Serial.println(fildist);
-  Serial.println(distance);
+  Serial.print("Distance (in cm): %f", distance);
+  Serial.print("Corrected distance (in cm): %f", kaldist);
   
-  delay(50);
+  delay(1/30);
 }
